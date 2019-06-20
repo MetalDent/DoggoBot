@@ -21,9 +21,18 @@ def woof(bot, update):	#request for dog image
     bot.send_photo(chat_id=chat_id, photo=url_dog)
 
 def get_url_cat():
-    contents = requests.get('https://api.thecatapi.com/v1/images/search').json()	#API cat
-    url_cat = contents[0]
-    return url_cat
+	urlCAT = 'https://api.thecatapi.com/v1/images/search?format=json'
+	payload = {}
+	headers = {
+	  'Content-Type': 'application/json',
+	  'x-api-key': '06d76875-b54b-4bab-b2ec-e561e6bdf3e1'
+	}
+	response = requests.request('GET', url)
+	data = json.loads(response.text)	#list
+	for i in data:    
+		url_cat = i["url"]	#dict
+	print(url_cat)
+	return url_cat
 
 def get_image_url_cat():
     allowed_extension = ['jpg','jpeg','png']
@@ -34,7 +43,7 @@ def get_image_url_cat():
     return url_cat
 
 def purr(bot, update):	#request for cat image
-	url_cat = get_image_url_cat()
+	url_cat = get_url_cat()
 	chat_id = update.message.chat_id
 	bot.send_photo(chat_id=chat_id, photo=url_cat)
 
