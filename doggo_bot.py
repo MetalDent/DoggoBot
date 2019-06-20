@@ -1,6 +1,7 @@
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 import requests
 import re
+import json
 
 def get_url_dog():
     contents = requests.get('https://random.dog/woof.json').json()	#API dog
@@ -20,18 +21,17 @@ def woof(bot, update):	#request for dog image
     chat_id = update.message.chat_id
     bot.send_photo(chat_id=chat_id, photo=url_dog)
 
-def get_url_cat():
+def get_url_cat():	#API cat from TheCatAPI
 	urlCAT = 'https://api.thecatapi.com/v1/images/search?format=json'
 	payload = {}
 	headers = {
 	  'Content-Type': 'application/json',
 	  'x-api-key': '06d76875-b54b-4bab-b2ec-e561e6bdf3e1'
 	}
-	response = requests.request('GET', url)
+	response = requests.request('GET', urlCAT)
 	data = json.loads(response.text)	#list
 	for i in data:    
 		url_cat = i["url"]	#dict
-	print(url_cat)
 	return url_cat
 
 def get_image_url_cat():
